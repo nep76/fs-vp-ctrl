@@ -1,0 +1,11 @@
+{
+  "name": "File Browser Video Player Controller",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "description": "File Browserの動画プレイヤーの操作を調整",
+  "permissions": [ "storage" ],
+  "content_scripts": [{
+    "matches": ["*://u76s.local/nas/*"],
+    "js": ["fb-vp-ctrl.js"]
+  }]
+}
