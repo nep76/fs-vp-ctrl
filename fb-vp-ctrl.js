@@ -24,11 +24,7 @@ window.addEventListener( "keydown", ( e ) => {
         e.preventDefault();
         e.stopImmediatePropagation();
         
-        if( g_video.paused ) {
-            g_video.play();
-        } else{
-            g_video.pause();
-        }
+        g_video.paused ? g_video.play() : g_video.pause();
     }
 }, true);
 
@@ -60,6 +56,21 @@ new MutationObserver ( () => {
                 cancelable: true,
                 shiftKey: true
             }) );
+        } );
+    }
+
+    audio = document.querySelector( "audio" );
+    if( audio && ! audio.dataset.fbvpctrlIsApply ){
+        audio.dataset.fbvpctrlIsApply = "true";
+        audio.addEventListener( "loadedmetadata", async function(){
+            const user_volume = localStorage.getItem( "LastVolume" ) || "1.0";
+            this.volume = parseFloat( user_volume );
+        } );
+        audio.addEventListener( "volumechange", function(){
+            localStorage.setItem( "LastVolume", this.volume );
+        } );
+        audio.addEventListener( "click", function(){
+            audio.paused ? audio.play() : audio.pause();
         } );
     }
 } ).observe( document.body, { childList: true, subtree: true } );
